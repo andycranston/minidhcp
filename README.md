@@ -26,26 +26,30 @@ MAC address) is offered that IP address.
 
 You need Python 3 installed in your environment.
 
-You also need appropriate access priviledges to be able to send and receive
-network packets on the well known DHCP TCP/IP port number 67.  Typically this means `root` access on UNIX/Linux and `Administrator` access on Windows.
+You also need appropriate access priviledges to be able to send and
+receive network packets on the well known DHCP TCP/IP port numbers
+67 and 68.  Typically this means `root` access on UNIX/Linux and
+`Administrator` access on Windows.
 
 If any firewalls are running they must allow DHCP traffic in and out
 on the network interface that `minidhcp` will bind to:
 
 This is how I make use of `minidhcp` on my Windows 10 laptop.
 
-I make sure I have set a static IP address on the ethernet port on my laptop.  I usually assign:
+I make sure I have set a static IP address on the ethernet port on
+my laptop.  I usually assign:
 
 * Static IP: 192.168.2.53
 * Subnet mask: 255.255.255.0
 * Default gateway: 192.168.2.254
 
-Next connect a network lead from the laptop ethernet port to the device you
-want to assign an IP address to and power the device on.
+Next connect a network lead from the laptop ethernet port to the
+device you want to assign an IP address to and power the device on.
 
 Next open a command prompt on the laptop.
 
-Change to the directory where the `minidhcp.py` script has been copied to.
+Change to the directory where the `minidhcp.py` script has been
+copied to.
 
 Next run `minidhcp` as follows:
 
@@ -92,11 +96,14 @@ there are probably lots of things it is not that it should be.
 
 ## Credits
 
-The online [TCP/IP Guide](http://www.tcpipguide.com/) by Charles M. Kozierok
-was invaluable.
+The online
+[TCP/IP Guide](http://www.tcpipguide.com/)
+by Charles M. Kozierok was invaluable.
 
-The [DHCP](http://www.tcpipguide.com/free/t_TCPIPDynamicHostConfigurationProtocolDHCP.htm) section
-has all the details.
+The
+[DHCP](http://www.tcpipguide.com/free/t_TCPIPDynamicHostConfigurationProtocolDHCP.htm)
+section has all the details.
 
 And because DHCP is an enhancement to BOOTP then a read on all things
-[BOOTP](http://www.tcpipguide.com/free/t_TCPIPBootstrapProtocolBOOTP.htm) is also useful.
+[BOOTP](http://www.tcpipguide.com/free/t_TCPIPBootstrapProtocolBOOTP.htm)
+is also useful.

@@ -3,6 +3,10 @@
 A miniature DHCP server run from the command line to assign
 a IPv4 address to a single host identified by MAC address.
 
+The primary use of `minidhcp` is:
+
+> "get the device online so it can be accessed and a static IP set so it no longer needs DHCP"
+
 ## What minidhcp does
 
 The minidhcp program (which is written in Python 3 in a single file
@@ -26,7 +30,7 @@ You also need appropriate access priviledges to be able to send and receive
 network packets on the well known DHCP TCP/IP port number 67.  Typically this means `root` access on UNIX/Linux and `Administrator` access on Windows.
 
 If any firewalls are running they must allow DHCP traffic in and out
-on the networ interface that minidhcp will bind to:
+on the network interface that `minidhcp` will bind to:
 
 This is how I make use of `minidhcp` on my Windows 10 laptop.
 
@@ -81,9 +85,6 @@ bit where an IP address is initially allocated.  When the lease runs out
 behaviour is unpredictable and will usually result in losing
 network connection to the device.
 
-The primary use of `minidhcp` is "get the device online so it can
-be accessed and a static IP set so it does not need DHCP".
-
 ## Coding style
 
 The Python 3 source code for `minidhcp.py` is not very "Pythonic".  Infact
@@ -93,3 +94,9 @@ there are probably lots of things it is not that it should be.
 
 The online [TCP/IP Guide](http://www.tcpipguide.com/) by Charles M. Kozierok
 was invaluable.
+
+The [DHCP](http://www.tcpipguide.com/free/t_TCPIPDynamicHostConfigurationProtocolDHCP.htm) section
+has all the details.
+
+And because DHCP is an enhancement to BOOTP then a read on all things
+[BOOTP](http://www.tcpipguide.com/free/t_TCPIPBootstrapProtocolBOOTP.htm) is also useful.

@@ -9,7 +9,7 @@ The primary use of `minidhcp` is:
 
 ## What minidhcp does
 
-The minidhcp program (which is written in Python 3 in a single file
+The `minidhcp` program (which is written in Python 3 in a single file
 called `minidhcp.py`) assigns an IPv4 address to a host via the DHCP
 protocol.  It also assigns a subnet mask and a default gateway.
 
@@ -61,7 +61,7 @@ If all is well `minidhcp` listens for DHCP packets.  Any packets which are
 not from the specified MAC address (command line option "-m") are ignored.
 When a DHCP DISCOVER packet is recieved a DHCP OFFER packet is sent.
 If the device likes the DHCP OFFER it should send a DHCP REQUEST packet.
-On receipt of the DHCP REQUEST packet minidhcp sends a DHCP ACK packet.
+On receipt of the DHCP REQUEST packet `minidhcp` sends a DHCP ACK packet.
 
 At this stage the device should assign the IP address, subnet mask and
 default gateway with a lease time of 24 hours.
@@ -70,7 +70,7 @@ Now try and access the device using IP address:
 
 * 192.168.2.100
 
-from the laptop.  If that works they `minidhcp` has done its work.
+from the laptop.  If that works then `minidhcp` has done its work.
 Stop the script running by typing Ctrl ^C (UNIX/Linix) or
 Ctrl break (Windows).
 
@@ -79,7 +79,7 @@ Ctrl break (Windows).
 Running any DHCP server (including `minidhcp`) requires care.  If the
 server is run on a network segment that already has a DHCP server
 running on it then bad things can (and usually do) happen.  Depending
-on the environment you might end up get shouted at (easy) or losing
+on the environment you might end up getting shouted at (easy) or losing
 your job (disaster!) so ask the appropriate people such as your boss or
 the network adminstrator if you have any doubts at all before running
 `minidhcp`.
@@ -91,7 +91,7 @@ network connection to the device.
 
 ## Coding style
 
-The Python 3 source code for `minidhcp.py` is not very "Pythonic".  Infact
+The Python 3 source code `minidhcp.py` is not very "Pythonic".  Infact
 there are probably lots of things it is not that it should be.
 
 ## Credits

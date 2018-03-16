@@ -32,9 +32,9 @@ receive network packets on the well known DHCP TCP/IP port numbers
 `Administrator` access on Windows.
 
 If any firewalls are running they must allow DHCP traffic in and out
-on the network interface that `minidhcp` will bind to:
+on the network interface that `minidhcp` will bind to.
 
-This is how I make use of `minidhcp` on my Windows 10 laptop.
+This is how I make use of `minidhcp` on my Windows 10 laptop ...
 
 I make sure I have set a static IP address on the ethernet port on
 my laptop.  I usually assign:

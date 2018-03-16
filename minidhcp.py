@@ -1,5 +1,5 @@
 #
-# @(!--#) @(#) minidhcp.py, version 012, 16-january-2018
+# @(!--#) @(#) minidhcp.py, version 013, 08-february-2018
 #
 # a mini dhcp server in Python using sockets to serve
 # just one host
@@ -63,6 +63,7 @@
 # 59  - Renewal (T2) time value
 # 60  - Vendor Class Identifier
 # 61  - Client Identifier
+# 67  - Boot file name (e.g. PXE booting)
 # 80  - 
 # 116 - 
 # 119 - 
@@ -299,6 +300,19 @@ def build4byteoption(optnum, d1, d2, d3, d4):
 
 ##############################################################################
 
+def buildstringoption(optnum, string):
+    optbytes = bytearray(2 + len(string))
+    optbytes[0] = optnum
+    optbytes[1] = len(string)
+    d = 2
+    for c in string:
+        optbytes[d] = ord(c)
+        d += 1
+
+    return optbytes
+
+##############################################################################
+
 def buildendoption():
     optbytes = bytearray(1)
     optbytes[0] = 255
@@ -332,6 +346,7 @@ ipbind = ""
 ipaddr = ""
 subnet = ""
 gateway = ""
+bootfilename = ""
 
 ### ipbind = "192.168.2.53"
 ### ipaddr = "192.168.2.100"
@@ -351,6 +366,8 @@ while arg < numargs:
         subnet = sys.argv[arg+1]
     elif sys.argv[arg] == "-g":
         gateway = sys.argv[arg+1]
+    elif sys.argv[arg] == "-f":
+        bootfilename = sys.argv[arg+1]
     else:
         print(progname, ": unrecognised command line argument \"", sys.argv[arg], "\"", sep='')
         exit()
@@ -397,6 +414,8 @@ print("IP address....: ", ipaddr, " (", readablebytes(baipaddr), ")", sep='')
 print("Bind address..: ", ipbind, " (", readablebytes(baipbind), ")", sep='')
 print("Subnet mask...: ", subnet, " (", readablebytes(basubnet), ")", sep='')
 print("Gateway.......: ", gateway," (", readablebytes(bagateway), ")",  sep='')
+if bootfilename != "":
+    print("Bootfile......: ", bootfilename, sep='')
 print("===============================================================================")
 
 # create a TCP/IP socket for receiving DHCP packets on port 67
@@ -574,6 +593,9 @@ while True:
     offer += buildbyteoption(3, bagateway)           # Gateway
     offer += build4byteoption(51, 0, 1, 81, 128)     # Lease time (24 hours)
     offer += buildbyteoption(54, baipbind)           # Server Identfier
+
+    if bootfilename != "":
+        offer += buildstringoption(67, bootfilename)
         
     # terminate options
     offer += buildendoption()        

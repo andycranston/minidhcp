@@ -39,9 +39,9 @@ This is how I make use of `minidhcp` on my Windows 10 laptop ...
 I make sure I have set a static IP address on the ethernet port on
 my laptop.  I usually assign:
 
-* Static IP: 192.168.2.53
+* Static IP: 192.168.1.7
 * Subnet mask: 255.255.255.0
-* Default gateway: 192.168.2.254
+* Default gateway: 192.168.1.254
 
 Next connect a network lead from the laptop ethernet port to the
 device you want to assign an IP address to and power the device on.
@@ -54,7 +54,7 @@ copied to.
 Next run `minidhcp` as follows:
 
 ```
-python minidhcp.py -m b8:27:eb:c3:27:b5 -b 192.168.2.53 -i 192.168.2.100 -s 255.255.255.0 -g 192.168.2.254
+python minidhcp.py -m b8:27:eb:c3:27:b5 -b 192.168.1.7 -i 192.168.1.100 -s 255.255.255.0 -g 192.168.1.254
 ```
 
 If all is well `minidhcp` listens for DHCP packets.  Any packets which are
@@ -68,11 +68,23 @@ default gateway with a lease time of 24 hours.
 
 Now try and access the device using IP address:
 
-* 192.168.2.100
+* 192.168.1.100
 
 from the laptop.  If that works then `minidhcp` has done its work.
 Stop the script running by typing Ctrl ^C (UNIX/Linix) or
 Ctrl break (Windows).
+
+## PXE boot filename
+
+The `minidhcp` server can also provide a PXE boot filename using the `-f'
+commmand line option.  For example:
+
+```
+python minidhcp.py -m b8:27:eb:c3:27:b5 -b 192.168.1.7 -i 192.168.1.100 -s 255.255.255.0 -g 192.168.1.254 -f pxeboot
+```
+
+will provide the filename `pxeboot' to the client.  If the client is PXE booting it will then request
+this file using TFTP.
 
 ## Warnings
 

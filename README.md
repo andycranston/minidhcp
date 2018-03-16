@@ -76,14 +76,14 @@ Ctrl break (Windows).
 
 ## PXE boot filename
 
-The `minidhcp` server can also provide a PXE boot filename using the `-f'
+The `minidhcp` server can also provide a PXE boot filename using the `-f`
 commmand line option.  For example:
 
 ```
 python minidhcp.py -m b8:27:eb:c3:27:b5 -b 192.168.1.7 -i 192.168.1.100 -s 255.255.255.0 -g 192.168.1.254 -f pxeboot
 ```
 
-will provide the filename `pxeboot' to the client.  If the client is PXE booting it will then request
+will provide the filename `pxeboot` to the client.  If the client is PXE booting it will then request
 this file using TFTP.
 
 ## Warnings

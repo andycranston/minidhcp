@@ -1,5 +1,5 @@
 #
-# @(!--#) @(#) minidhcp.py, version 013, 08-february-2018
+# @(!--#) @(#) minidhcp.py, version 014, 22-march-2018
 #
 # a mini dhcp server in Python using sockets to serve
 # just one host
@@ -118,7 +118,7 @@ OPT_DHCP_MESSAGE_TYPE = 53
 ##############################################################################
 
 def showpacket(bytes):
-    bpr = 32              # bpr is Bytes Per Row
+    bpr = 16              # bpr is Bytes Per Row
     numbytes = len(bytes)
 
     if numbytes == 0:
@@ -443,7 +443,7 @@ while True:
         continue
 
     # display the incoming packet
-    showpacket(packet)
+    ### showpacket(packet)
 
     # packets < 241 bytes don't work either
     if lenpacket < 241:
@@ -601,7 +601,7 @@ while True:
     offer += buildendoption()        
 
     # show the packet
-    showpacket(offer)
+    ### showpacket(offer)
 
     # send it
     print("sending", responsename, "packet")

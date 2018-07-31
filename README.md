@@ -74,6 +74,13 @@ from the laptop.  If that works then `minidhcp` has done its work.
 Stop the script running by typing Ctrl ^C (UNIX/Linix) or
 Ctrl break (Windows).
 
+## The -g gateway option
+
+The -g gateway option is now optional rather than required.  You do not always
+need (or want) a default gateway to be assigned.  One reason might be the device
+already has a default gateway set to another interface.  Another reason might be
+you do not want the device to have full network connectivity just yet.
+
 ## PXE boot filename
 
 The `minidhcp` server can also provide a PXE boot filename using the `-f`

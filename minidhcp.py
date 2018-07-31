@@ -395,17 +395,18 @@ if errmsg != "OK":
     print(progname, ": ", errmsg, ": bad IP address for -i option", sep='')
     exit()
 
-# check foir good subnet
+# check for good subnet
 errmsg, basubnet = ip2bytearray(subnet)
 if errmsg != "OK":
     print(progname, ": ", errmsg, ": bad subnet mask for -s option", sep='')
     exit()
 
-# check for good gateway
-errmsg, bagateway = ip2bytearray(gateway)
-if errmsg != "OK":
-    print(progname, ": ", errmsg, ": bad gateway address for -g option", sep='')
-    exit()
+# if present check for good gateway
+if gateway != "":
+    errmsg, bagateway = ip2bytearray(gateway)
+    if errmsg != "OK":
+        print(progname, ": ", errmsg, ": bad gateway address for -g option", sep='')
+        exit()
 
 # print program globals
 print("===============================================================================")
@@ -413,7 +414,8 @@ print("MAC address...: ", macaddr, sep='')
 print("IP address....: ", ipaddr, " (", readablebytes(baipaddr), ")", sep='')
 print("Bind address..: ", ipbind, " (", readablebytes(baipbind), ")", sep='')
 print("Subnet mask...: ", subnet, " (", readablebytes(basubnet), ")", sep='')
-print("Gateway.......: ", gateway," (", readablebytes(bagateway), ")",  sep='')
+if gateway != "":
+    print("Gateway.......: ", gateway," (", readablebytes(bagateway), ")",  sep='')
 if bootfilename != "":
     print("Bootfile......: ", bootfilename, sep='')
 print("===============================================================================")
@@ -590,11 +592,12 @@ while True:
         offer += build1byteoption(53, 5)             # DHCPACK
 
     offer += buildbyteoption(1, basubnet)            # Subnet mask
-    offer += buildbyteoption(3, bagateway)           # Gateway
+    if gateway != "":                                # Gateway
+        offer += buildbyteoption(3, bagateway)
     offer += build4byteoption(51, 0, 1, 81, 128)     # Lease time (24 hours)
     offer += buildbyteoption(54, baipbind)           # Server Identfier
 
-    if bootfilename != "":
+    if bootfilename != "":                           # Boot filename
         offer += buildstringoption(67, bootfilename)
         
     # terminate options

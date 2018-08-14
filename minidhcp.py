@@ -1,5 +1,5 @@
 #
-# @(!--#) @(#) minidhcp.py, version 014, 22-march-2018
+# @(!--#) @(#) minidhcp.py, version 016, 14-august-2018
 #
 # a mini dhcp server in Python using sockets to serve
 # just one host
@@ -338,7 +338,7 @@ numargs = len(sys.argv) - 1
 # if an odd number of arguments then something wrong
 if (numargs % 2) != 0:
     print(progname, ": odd number of command line arguments", sep='')
-    exit()
+    sys.exit()
 
 # set program defaults
 macaddr = ""
@@ -432,7 +432,7 @@ sock.bind(server_address)
 while True:
     # Wait for a connection
     print("")
-    print("waiting for a connection")
+    print("Waiting for a connection ...")
     packet, address = sock.recvfrom(32768)
 
     # get and report packet length
@@ -456,32 +456,35 @@ while True:
     op = packet[0]
     print("Op:", op)
     if (op != 1) and (op != 2):
-        print("invalid packet - Op field not 1 (request) or 2 (reply)")
+        print("unsupported packet - Op field not 1 (request) or 2 (reply)")
         continue
 
     # extract hardware type
     hardwaretype = packet[1]
-    print("Hardware type:", hardwaretype)
     if hardwaretype != 1:
         print("ignoring packet - only hardware type 1 \"Ethernet (10 Mb)\" currently supported")
         continue
 
     # extract hardware addreess length
     lenhardwareaddress = packet[2]
-    print("Hardware address length:", lenhardwareaddress)
     if lenhardwareaddress != 6:
         print("ignoring packet - only hardware address lengths of 6 bytes currently supported")
         continue
 
+    # print hardware type and address length
+    ### print("Hardware type:", hardwaretype)
+    ### print("Hardware address length:", lenhardwareaddress)
+
     # extract hops, transaction identfier, seconds and flags
     hops = packet[3]
-    print("Hops:", hops)
     transactionid = packet[4:8]
-    print("Transaction ID:", readablebytes(transactionid))
-    seconds = packet[8:10]
-    print("Seconds:", readablebytes(seconds))
     flags = packet[10:12]
-    print("Flags:", readablebytes(flags))
+    seconds = packet[8:10]
+    
+    ### print("Hops:", hops)
+    ### print("Transaction ID:", readablebytes(transactionid))
+    ### print("Seconds:", readablebytes(seconds))
+    ### print("Flags:", readablebytes(flags))
 
     # extract addresses
     ciaddr = packet[12:16]
@@ -498,10 +501,12 @@ while True:
 
     # extract cookie
     cookie = packet[236:240]
-    print("Cookie:", readablebytes(cookie))
     if readablebytes(cookie) != "0x63825363":
         print("ignoring packet - options field does not begin with Magic Cookie 0x63825363")
         continue
+
+    # print cookie
+    ### print("Cookie:", readablebytes(cookie))
 
     # option data
 

@@ -93,6 +93,20 @@ python minidhcp.py -m b8:27:eb:c3:27:b5 -b 192.168.1.7 -i 192.168.1.100 -s 255.2
 will provide the filename `pxeboot` to the client.  If the client is PXE booting it will then request
 this file using TFTP.
 
+NOTE: some DHCP clients expect the PXE boot filename (and other string value DHCP options) to be null
+terminated.  By default `minidhcp` does not null terminate the PXE boot filename.  If you have a DHCP
+client that needs null termination then add a '/' character to the end of the pxeboot filename - for
+example:
+
+```
+python minidhcp.py -m b8:27:eb:c3:27:b5 -b 192.168.1.7 -i 192.168.1.100 -s 255.255.255.0 -g 192.168.1.254 -f pxeboot/
+```
+
+This time the returned string to the DHCP client will have a terminating byte at the end of it.
+
+An example of a DHCP client that needs a null terminated PXE boot filename is the PCXE ROM in a Dell Inspiron 1012 (Dell
+model number 1012-8425) Intel Atom based notebook.
+
 ## Warnings
 
 Running any DHCP server (including `minidhcp`) requires care.  If the

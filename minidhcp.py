@@ -1,5 +1,5 @@
 #
-# @(!--#) @(#) minidhcp.py, version 016, 14-august-2018
+# @(!--#) @(#) minidhcp.py, version 017, 23-august-2018
 #
 # a mini dhcp server in Python using sockets to serve
 # just one host
@@ -16,6 +16,7 @@
 #    https://pymotw.com/2/socket/tcp.html
 #    https://pymotw.com/2/socket/udp.html
 #    http://www.tcpipguide.com/free/t_DHCPMessageFormat.htm
+#    http://ftp.isc.org/www/dhcp/doc/References.html#anchor12
 #
 
 #
@@ -300,6 +301,20 @@ def build4byteoption(optnum, d1, d2, d3, d4):
 
 ##############################################################################
 
+# HACK: http://ftp.isc.org/www/dhcp/doc/References.html#anchor12
+#
+#    "RFS2132 ... The document unfortunately waffles to a great extent about
+#     the NULL termination of DHCP Options, and some DHCP Clients (Windows 95)
+#     have been implemented that rely upon DHCP Options containing text strings
+#     to be NULL-terminated (or else they crash)"
+#
+# some DHCP/PXE clients expect DHCP option string values to be null terminated.
+# the minidhcp program (currently) only uses one string option - the
+# PXE boot filename option
+# to allow for null termination if a string ends with a "/" character
+# this last character is changed to a NULL ('\0')
+#
+
 def buildstringoption(optnum, string):
     optbytes = bytearray(2 + len(string))
     optbytes[0] = optnum
@@ -307,8 +322,11 @@ def buildstringoption(optnum, string):
     d = 2
     for c in string:
         optbytes[d] = ord(c)
+        if d == len(string) + 1:
+            if c == "/":
+                optbytes[d] = 0
         d += 1
-
+        
     return optbytes
 
 ##############################################################################
@@ -609,7 +627,7 @@ while True:
     offer += buildendoption()        
 
     # show the packet
-    ### showpacket(offer)
+    showpacket(offer)
 
     # send it
     print("sending", responsename, "packet")

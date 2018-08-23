@@ -104,8 +104,8 @@ python minidhcp.py -m b8:27:eb:c3:27:b5 -b 192.168.1.7 -i 192.168.1.100 -s 255.2
 
 This time the returned string to the DHCP client will have a terminating byte at the end of it.
 
-An example of a DHCP client that needs a null terminated PXE boot filename is the PCXE ROM in a Dell Inspiron 1012 (Dell
-model number 1012-8425) Intel Atom based notebook.
+An example of a DHCP client that needs a null terminated PXE boot filename is the PXE ROM
+in a Dell Inspiron 1012 (Dell model number 1012-8425) Intel Atom based notebook.
 
 ## Warnings
 

@@ -627,7 +627,7 @@ while True:
     offer += buildendoption()        
 
     # show the packet
-    showpacket(offer)
+    ### showpacket(offer)
 
     # send it
     print("sending", responsename, "packet")

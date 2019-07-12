@@ -1,5 +1,5 @@
 #
-# @(!--#) @(#) minidhcp.py, version 018, 12-november-2018
+# @(!--#) @(#) minidhcp.py, version 019, 12-july-2019
 #
 # a mini dhcp server in Python using sockets to serve
 # just one host
@@ -632,7 +632,8 @@ while True:
     # send it
     print("sending", responsename, "packet")
     sendsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sendsock.bind(('', 0))
+    # sendsock.bind(('', 0))
+    sendsock.bind((ipbind, 0))
     sendsock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
     send_server_address = ('255.255.255.255', 68)
     sent = sendsock.sendto(offer, send_server_address)
